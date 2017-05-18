@@ -1,14 +1,20 @@
 class Kele
   include HTTParty
-  base_uri "https://www.bloc.io/api/v1"
 
-  attr_accessor :username, :password
+  attr_accessor :email, :password
 
-  def initialize(username, password)
-    @username = username
+  def initialize(email, password)
+    @email = username
     @password = password
-  end
+    base_uri "https://www.bloc.io/api/v1"
+    self.class.post('/sessions', @email, @password)
 
-  self.class.post('/sessions', @username, @password)
+    if auth_token != nil
+      auth_token = @auth_token
+      print "successful authentication"
+    else
+      print "failure"
+    end
+  end
 
 end
