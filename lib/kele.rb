@@ -6,10 +6,10 @@ class Kele
   def initialize(email, password)
     @email = username
     @password = password
-    base_uri "https://www.bloc.io/api/v1"
-    self.class.post('/sessions', @email, @password)
+    @base_url = "https://www.bloc.io/api/v1"
+    response = self.class.post('/sessions', body: { email: email, password: password } )
 
-    if auth_token != nil
+    if response["auth_token"] != nil
       auth_token = @auth_token
       print "successful authentication"
     else
