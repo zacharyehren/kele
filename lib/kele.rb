@@ -1,10 +1,10 @@
 class Kele
-  include HTTParty
+  require 'httparty'
 
   attr_accessor :email, :password
 
   def initialize(email, password)
-    @email = username
+    @email = email
     @password = password
     @base_url = "https://www.bloc.io/api/v1"
     response = self.class.post('/sessions', body: { email: email, password: password } )

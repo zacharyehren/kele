@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.15.5)
+      multi_xml (>= 0.5.2)
+    kele (0.0.1)
+      httparty (~> 0.13)
+    multi_xml (0.6.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  httparty (~> 0.13)
+  kele
+
+BUNDLED WITH
+   1.14.5
