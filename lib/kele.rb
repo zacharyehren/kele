@@ -1,5 +1,6 @@
+require 'httparty'
 class Kele
-  require 'httparty'
+  include HTTParty
 
   attr_accessor :email, :password
 
