@@ -8,8 +8,8 @@ class Kele
     @email = email
     @password = password
     @base_url = "https://www.bloc.io/api/v1"
-    response = self.class.post('/sessions', body: { email: email, password: password } )
-
+    response = self.class.post("#{@base_url}/sessions", body: { email: email, password: password } )
+          
     if response["auth_token"] != nil
       auth_token = @auth_token
       print "successful authentication"
