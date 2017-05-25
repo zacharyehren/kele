@@ -105,6 +105,7 @@ PLATFORMS
 
 DEPENDENCIES
   httparty (~> 0.13)
+  json
   kele
   rails (= 4.2.7.1)
 
