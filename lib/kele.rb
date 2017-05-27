@@ -11,7 +11,7 @@ class Kele
     response = self.class.post("#{@base_url}/sessions", body: { email: email, password: password } )
 
     if response["auth_token"] != nil
-      auth_token = @auth_token
+      @auth_token = response["auth_token"]
       print "successful authentication"
     else
       print "authentication failed"
@@ -19,7 +19,7 @@ class Kele
   end
 
   def get_me
-    response = self.class.get("#{@base_url}/users/me")
+    response = self.class.get("#{@base_url}/users/me", headers: { "authorization" => @auth_token } )
       if response != nil
         print "success"
         user = JSON.parse(response.body)
