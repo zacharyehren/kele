@@ -14,19 +14,19 @@ class Kele
       auth_token = @auth_token
       print "successful authentication"
     else
-      print "failure"
+      print "authentication failed"
     end
   end
 
   def get_me
-    response = self.class.get("#{@base_url}/users/me", headers: { "authorization" => @auth_token })
-    if @auth_token != nil
-      print "successful authentication"
-      user = JSON.parse(response.body)
-      user
-    else
-      print "failure"
+    response = self.class.get("#{@base_url}/users/me")
+      if response != nil
+        print "success"
+        user = JSON.parse(response.body)
+        user
+      else
+        print "failure"
+      end
     end
-  end
 
 end
