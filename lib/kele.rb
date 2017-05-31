@@ -43,16 +43,16 @@ class Kele
       end
     end
 
-    def get_messages(number)
-      response = self.class.get("#{@base_url}/message_threads", headers: { "authorization" => @auth_token } )
+    def get_messages(page)
+      response = self.class.post("#{@base_url}/message_threads", headers: { "authorization" => @auth_token }, body: { page: page } )
       if response != nil
         print "found messages"
-        message_page_number = response[ values: { "page" => number } ]
-        messages = JSON.parse(message_page_number)
+        messages = JSON.parse(page)
         messages
       else
         print "failure"
       end
+
     end
 
     # def create_messages (recipient_id, token, subject, stripped_text)
