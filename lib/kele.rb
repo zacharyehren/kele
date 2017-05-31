@@ -1,6 +1,8 @@
 require 'httparty'
+require_relative 'roadmap'
 class Kele
   include HTTParty
+  include Roadmap
 
   attr_accessor :email, :password, :base_url
 
@@ -72,6 +74,8 @@ class Kele
     #     print "failure"
     #   end
     # end
+
+
 
 
 end
