@@ -43,39 +43,45 @@ class Kele
       end
     end
 
-    def get_messages(page)
-      response = self.class.post("#{@base_url}/message_threads", headers: { "authorization" => @auth_token }, body: { page: page } )
-      if response != nil
+    def get_messages(page = nil)
+      response = self.class.get("#{@base_url}/message_threads?page=#{page}", headers: { "authorization" => @auth_token } )
+      if page == nil
+        response = self.class.get("#{@base_url}/message_threads", headers: { "authorization" => @auth_token } )
+        parse_json
+      elsif response != nil
         print "found messages"
-        messages = JSON.parse(page)
+        messages = JSON.parse(response.body)
         messages
       else
         print "failure"
       end
-
     end
 
-    # def create_messages (recipient_id, token, subject, stripped_text)
-    #   response = self.class.post("#{@base_url}/messages", headers: { "authorization" => @auth_token } )
-    #   values = {
-    #   sender: @email,
-    #   recipient_id: @mentor_id,
-    #   token:
-    #   subject:
-    #   stripped_text:
-    # }
-    #
-    #   if response != nil
-    #     print "found messages"
-    #     messages = JSON.parse(response.body)
-    #     messages
-    #   }
-    #   else
-    #     print "failure"
-    #   end
-    # end
+    def create_messages (recipient_id, token, subject, stripped_text)
+      response = self.class.post("#{@base_url}/messages", headers: { "authorization" => @auth_token } )
+      values = {
+      sender: @email,
+      recipient_id: @mentor_id,
+      token:
+      subject:
+      stripped_text:
+    }
+      if response != nil
+        print "found messages"
+        messages = JSON.parse(response.body)
+        messages
+      }
+      else
+        print "failure"
+      end
+    end
 
+private
 
-
+  def parse_json
+    print "found messages"
+    json = JSON.parse(response.body)
+    json
+  end
 
 end
