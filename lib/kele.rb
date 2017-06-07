@@ -22,10 +22,8 @@ class Kele
 
   def get_me
     response = self.class.get("#{@base_url}/users/me", headers: { "authorization" => @auth_token } )
-      if response != nil
-        print "success"
-        user = JSON.parse(response.body)
-        user
+      if nil != response
+        parse_json(response)
       else
         print "failure"
       end
@@ -34,10 +32,8 @@ class Kele
     def get_mentor_availability(mentor_id)
       @mentor_id = mentor_id
       response = self.class.get("#{@base_url}/mentors/#{@mentor_id}/student_availability", headers: { "authorization" => @auth_token } )
-      if response != nil
-        print "found mentor"
-        availability = JSON.parse(response.body)
-        availability
+      if nil != response
+        parse_json(response)
       else
         print "failure"
       end
@@ -45,32 +41,29 @@ class Kele
 
     def get_messages(page = nil)
       response = self.class.get("#{@base_url}/message_threads?page=#{page}", headers: { "authorization" => @auth_token } )
-      if page == nil
+      if nil == page
         response = self.class.get("#{@base_url}/message_threads", headers: { "authorization" => @auth_token } )
-        parse_json
-      elsif response != nil
-        print "found messages"
-        messages = JSON.parse(response.body)
-        messages
+        parse_json(response)
+      elsif nil != response
+        parse_json(response)
       else
         print "failure"
       end
     end
 
-    def create_messages (recipient_id, token, subject, stripped_text)
-      response = self.class.post("#{@base_url}/messages", headers: { "authorization" => @auth_token } )
+    def create_messages(recipient_id, token, subject, stripped_text)
       values = {
       sender: @email,
-      recipient_id: @mentor_id,
-      token:
-      subject:
-      stripped_text:
+      recipient_id: recipient_id,
+      token: token,
+      subject: subject,
+      stripped_text: stripped_text
     }
-      if response != nil
-        print "found messages"
-        messages = JSON.parse(response.body)
-        messages
-      }
+      response = self.class.post("#{@base_url}/messages", body: { sender: @email, recipient_id: recipient_id, token: token, subject: subject, stripped_text: stripped_text } )
+      if nil != response
+        print "message sent!"
+        message = JSON.parse(response.body)
+        message
       else
         print "failure"
       end
@@ -78,7 +71,7 @@ class Kele
 
 private
 
-  def parse_json
+  def parse_json(response)
     print "found messages"
     json = JSON.parse(response.body)
     json
