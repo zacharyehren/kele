@@ -57,16 +57,9 @@ class Kele
       recipient_id: recipient_id,
       token: token,
       subject: subject,
-      stripped_text: stripped_text
+      'stripped-text' => stripped_text
     }
-      response = self.class.post("#{@base_url}/messages", body: { sender: @email, recipient_id: recipient_id, token: token, subject: subject, stripped_text: stripped_text } )
-      if nil != response
-        print "message sent!"
-        message = JSON.parse(response.body)
-        message
-      else
-        print "failure"
-      end
+      response = self.class.post("#{@base_url}/messages", headers: { "authorization" => @auth_token }, body: { sender: @email, recipient_id: recipient_id, token: token, subject: subject, 'stripped-text' => stripped_text } )
     end
 
 private
